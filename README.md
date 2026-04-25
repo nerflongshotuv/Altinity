@@ -1,1 +1,1 @@
-# AltinityAssignment
+# Altinity
