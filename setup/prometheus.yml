@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'clickhouse'
+    static_configs:
+      - targets:
+          - 'clickhouse-01:9363'
+          - 'clickhouse-02:9363'
+          - 'clickhouse-03:9363'
