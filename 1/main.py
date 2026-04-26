@@ -13,12 +13,8 @@ def get_client(config):
     return Client(**config)
 
 
-def setup_database(client):
-    client.execute(f"CREATE DATABASE IF NOT EXISTS {DATABASE}")
-
-
 def drop_table(client):
-    client.execute(f"DROP TABLE IF EXISTS {DATABASE}.{TABLE} SYNC")
+    client.execute(f"DROP TABLE IF EXISTS {DATABASE}.{TABLE} ON CLUSTER cluster_1S_3R")
 
 
 def create_replicated_table(client):
@@ -67,9 +63,7 @@ def main():
     ch01 = get_client(CH01_CONFIG)
     ch02 = get_client(CH02_CONFIG)
 
-    for client in (ch01, ch02):
-        setup_database(client)
-        drop_table(client)
+    drop_table(ch01)
 
     create_replicated_table(ch01)
 
@@ -90,7 +84,6 @@ def main():
         print("Got:", result)
 
     drop_table(ch01)
-    drop_table(ch02)
 
 if __name__ == "__main__":
     main()
